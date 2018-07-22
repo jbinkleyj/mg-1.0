@@ -1,0 +1,159 @@
+head	1.3;
+access;
+symbols;
+locks
+	beebe:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	94.05.16.07.09.54;	author beebe;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.15.22.20.53;	author beebe;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.15.03.11.11;	author beebe;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@.TH mgdictlist 1 "15 May 1994"
+.SH NAME
+mgdictlist \- list the contents of a dictionary
+.SH SYNOPSIS
+.B mgdictlist
+[
+.B \-q
+]
+.I filename
+.SH DESCRIPTION
+.B mgdictlist
+lists the contents of either a compressed compression dictionary, a
+text statistics file, or a compressed stemmed dictionary.  Unlike all
+the other programs in the
+.BR mg (1)
+suite, it is necessary to specify the complete pathname of the
+dictionary to list.
+.SH OPTIONS
+The
+.I filename
+must be last.
+.TP "\w'\fIfilename\fP'u+2n"
+.B \-q
+Generate an abbreviated output (machine-readable rather than
+human-readable).
+.TP
+.I filename
+This is the name of the dictionary to list.
+.B mgdictlist
+automatically detects whether the file is a compressed compression
+dictionary, text statistics file, or a compressed stemmed dictionary.
+.SH FILES
+.TP 20
+.B *.text.dict
+Text statistics file.
+.TP
+.B *.text.dict
+Compressed compression dictionary.
+.TP
+.B *.invf.build
+Compressed stemmed dictionary.
+.SH "SEE ALSO"
+.na
+.BR mg (1),
+.BR mg_compression_dict (1),
+.BR mg_fast_comp_dict (1),
+.BR mg_get (1),
+.BR mg_invf_dict (1),
+.BR mg_invf_dump (1),
+.BR mg_invf_rebuild (1),
+.BR mg_passes (1),
+.BR mg_perf_hash_build (1),
+.BR mg_text_estimate (1),
+.BR mg_weights_build (1),
+.BR mgbilevel (1),
+.BR mgbuild (1),
+.BR mgfelics (1),
+.BR mgquery (1),
+.BR mgstat (1),
+.BR mgtic (1),
+.BR mgticbuild (1),
+.BR mgticdump (1),
+.BR mgticprune (1),
+.BR mgticstat (1).
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d6 3
+a8 1
+.RB [ \-q ]
+a21 1
+.PP
+d43 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+.TH mgdictlist 1 "19 December 1992"
+a4 1
+
+d6 1
+a6 1
+.RB [ -q ]
+a8 1
+.LP
+d10 6
+a15 1
+lists the contents of either a compressed compression dictionary, a text statistics file or a compressed stemmed dictionary. Unlike all the other mg related programs it is necessary to specify the complete pathname of the dictionary to list.
+d17 1
+a17 2
+.LP
+The 
+d20 2
+a21 2
+.RS
+.TP
+d23 2
+a24 1
+Generate an abbreviated output. Machine readable rather than human readable.
+d28 3
+a30 2
+.B mgdictlist 
+automatically detects whether the file is a compressed compression dictionary, text statistics file or a compressed stemmed dictionary.
+a31 1
+.PD 0
+d42 1
+a42 1
+.LP
+d44 1
+a48 1
+.BR mg_make_fast_dict (1),
+d62 1
+a62 1
+.BR mgticstat (1)
+@

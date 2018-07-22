@@ -1,0 +1,251 @@
+head	1.3;
+access;
+symbols;
+locks
+	beebe:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	94.05.16.07.09.54;	author beebe;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.15.22.20.53;	author beebe;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.15.03.11.11;	author beebe;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@.TH mg_invf_dump 1 "15 May 1994"
+.SH NAME
+mg_invf_dump \- Dump out an inverted file in ASCII
+.SH SYNOPSIS
+.B mg_invf_dump
+[
+.B \-h
+]
+[
+.B \-b
+]
+[
+.B \-w
+]
+[
+.BI \-d " directory"
+]
+.BI \-f " name"
+.SH DESCRIPTION
+This program dumps out an inverted file produced by the
+.BR mg (1)
+system as ASCII numbers.  This program could be used in conjunction
+with
+.BR mgdictlist (1)
+to write simple shell programs that work with the inverted files.  The
+output from the program looks something like this:
+.LP
+.RS
+.ft 3
+.nf
+6 337
+1
+ 1 1
+1
+ 5 1
+1
+ 2 1
+1
+ 1 1
+4
+ 1 3
+ 2 7
+ 3 2
+ 5 2
+1
+ 1 1
+ . . .
+.fi
+.ft
+.RE
+The first number (6) is the number of documents in the collection.  It
+is followed by the number of different terms in the collection.  For
+each term, the number of different documents it occurs in follows. The
+document numbers that the term occurs in are listed next.  If
+.B \-w
+is specified, then the number of times the term occurred in the
+document is printed alongside the document number.
+.SH OPTIONS
+Options may appear in any order.
+.TP "\w'\fB\-d\fP \fIdirectory\fP'u+2n"
+.B \-h
+This displays a usage line on
+.IR stdout .
+.TP
+.B \-b
+This option will cause the output from the program to be in fixed-size
+binary numbers, rather than in ASCII.
+.TP
+.B \-w
+If the inverted file is a level-2 or level-3 inverted file, this causes
+the word counts per document to be output.
+.TP
+.BI \-d " directory"
+This specifies the directory where the document collection can be found.
+.TP
+.BI \-f " name"
+This specifies the base name of the document collection.
+.SH ENVIRONMENT
+.TP "\w'\fBMGDATA\fP'u+2n"
+.SB MGDATA
+If this environment variable exists, then its value is used as the
+default directory where the
+.BR mg (1)
+collection files are.  If this variable does not exist, then the
+directory \*(lq\fB.\fP\*(rq is used by default.  The command line
+option
+.BI \-d " directory"
+overrides the directory in
+.BR MGDATA .
+.SH FILES
+.TP 20
+.B *.invf.dict
+The compressed stemmed dictionary.
+.TP
+.B *.invf.ORG
+The original inverted file saved by
+.BR mg_invf_rebuild .
+.TP
+.B *.invf
+The inverted file.
+.SH "SEE ALSO"
+.na
+.BR mg (1),
+.BR mg_compression_dict (1),
+.BR mg_fast_comp_dict (1),
+.BR mg_get (1),
+.BR mg_invf_dict (1),
+.BR mg_invf_rebuild (1),
+.BR mg_passes (1),
+.BR mg_perf_hash_build (1),
+.BR mg_text_estimate (1),
+.BR mg_weights_build (1),
+.BR mgbilevel (1),
+.BR mgbuild (1),
+.BR mgdictlist (1),
+.BR mgfelics (1),
+.BR mgquery (1),
+.BR mgstat (1),
+.BR mgtic (1),
+.BR mgticbuild (1),
+.BR mgticdump (1),
+.BR mgticprune (1),
+.BR mgticstat (1).
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d6 12
+a17 5
+.RB [ \-h ]
+.RB [ \-b ]
+.RB [ \-w ]
+.RB [ \-d
+.IR directory ]
+a59 1
+.PP
+d102 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+.TH mg_invf_dump 1 "31 January 1994"
+a4 1
+ 
+d9 1
+a9 1
+.RB [ \-d 
+a11 1
+
+d13 7
+a20 4
+This program dumps out an inverted file produced by the MG system as ASCII numbers. This program could be used in conjunction with 
+.B mgdictlist
+to write simple shell programs that work with the inverted files. The output from the program looks something like this :
+.LP
+a40 1
+
+d44 4
+a47 1
+The First number (6) is the number of documents in the collection, it is followed by the number of different terms in the collection. For each term, the number of different documents it occurs in is next, The document numbers that the term occurs in are listed next. If 
+d49 2
+a50 1
+is specified then the number of times the term occurred in the document is printed along side the document number.
+a51 1
+.LP
+d53 2
+a54 2
+.RS
+.TP
+d56 2
+a57 1
+This displays a usage line on the screen.
+d60 2
+a61 1
+This option will cause the output from the program to be in fixed size binary numbers rather that ASCII.
+d64 2
+a65 1
+If the inverted file is a level 2 or level 3 inverted file this causes the word counts per document to be output.
+d73 1
+a73 1
+.TP
+d75 6
+a80 4
+If this environment variable exists then its value is used a the default 
+directory where the mg collection files are. If this variable does not exist
+then the directory \*(lq\fB.\fP\*(rq is used by default. The command line 
+option 
+d82 1
+a82 1
+overrides the directory in 
+a84 1
+.PD 0
+d90 2
+a91 2
+The original inverted file saved by 
+.BR mg_mg_invf_rebuild .
+a94 1
+
+d96 1
+a96 1
+.LP
+d98 1
+a101 1
+.BR mg_make_fast_dict (1),
+d116 1
+a116 1
+.BR mgticstat (1)
+@

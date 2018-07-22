@@ -1,0 +1,212 @@
+head	1.3;
+access;
+symbols;
+locks
+	beebe:1.3; strict;
+comment	@# @;
+
+
+1.3
+date	94.05.16.07.09.54;	author beebe;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.15.22.20.53;	author beebe;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.15.03.11.11;	author beebe;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@.TH mgticprune 1 "15 May 1994"
+.SH NAME
+mgticprune \- prunes the library to remove duplicates
+.SH SYNOPSIS
+.B mgticprune
+[
+.BI \-a " n"
+]
+[
+.BI \-s " n"
+]
+[
+.B \-Q
+]
+.I libraryfile
+.if n .ti +9n
+[
+.I pruned-libraryfile
+]
+.SH DESCRIPTION
+.B mgticprune
+examines
+.I libraryfile
+and removes duplicate marks.  If
+.I pruned-libraryfile
+is not specified,
+.I libraryfile
+is overwritten with the marks in the pruned library.  The Combined
+Symbol Independent Strategy (CSIS) method is used to match marks.
+.SH OPTIONS
+Options may appear in any order.
+.TP "\w'\fIpruned-libraryfile\fP'u+2n"
+.B \-h
+This displays a usage line on
+.IR stderr .
+.TP
+.BI \-a " n"
+Prune marks when their area is under or equal to the threshold,
+.IR n .
+The default value is\ 3.
+.TP
+.BI \-s " n"
+Prune marks when their width and height is under or equal to
+the threshold,
+.IR n .
+The default value is\ 0.
+.TP
+.BI \-Q
+Use a quicker method of pruning.  The number of iterations through the
+averaging and pruning processes is decreased.  This usually reduces
+time by a half, but compression ratios decrease.
+.TP
+.I libraryfile
+This specifies the name of the library file
+.TP
+.I pruned-libraryfile
+This specifies the name of the prune library, after duplicates and
+matches have been removed.  If this file is not specified, then
+.I libraryfile
+will be overwritten.
+.SH "SEE ALSO"
+.na
+.BR mg (1),
+.BR mg_compression_dict (1),
+.BR mg_fast_comp_dict (1),
+.BR mg_get (1),
+.BR mg_invf_dict (1),
+.BR mg_invf_dump (1),
+.BR mg_invf_rebuild (1),
+.BR mg_passes (1),
+.BR mg_perf_hash_build (1),
+.BR mg_text_estimate (1),
+.BR mg_weights_build (1),
+.BR mgbilevel (1),
+.BR mgbuild (1),
+.BR mgdictlist (1),
+.BR mgfelics (1),
+.BR mgquery (1),
+.BR mgstat (1),
+.BR mgtic (1),
+.BR mgticbuild (1),
+.BR mgticdump (1),
+.BR mgticstat (1).
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d6 9
+a14 7
+.RB [ \-a
+.I n
+.RB ]
+.RB [ \-s
+.I n
+.RB ]
+.RB [ \-Q ]
+d16 4
+a19 1
+.RI [ pruned-libraryfile ]
+a31 1
+.PP
+d40 1
+a40 1
+The default value is 3.
+d46 1
+a46 1
+The default value is 0.
+d62 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+.TH mgticprune 1 "28 February 1994"
+a14 1
+
+a15 1
+.LP
+d17 1
+a17 1
+examines 
+d19 1
+a19 1
+file and uses removes duplicate marks.  If 
+d21 1
+a21 1
+is not specified
+d23 2
+a24 2
+is overwritten with the marks in the pruned library.  The method used to match marks is the Combined Symbol Independent Strategy (CSIS) method.
+
+a25 1
+.LP
+d27 2
+a28 2
+.RS
+.TP
+d30 2
+a31 1
+This displays a usage line on the screen
+d34 3
+a36 2
+Prune marks when their area is under or equal to the threshold, n.  The 
+default value is 3.
+d40 3
+a42 1
+the threshold, n.  The default value is 0.
+d45 4
+a48 4
+Use a quicker method of pruning.  The number of iterations through
+the averaging and pruning processes is decreased.  Usually reduces time by
+a half, but compression ratios decrease.
+.TP	
+d53 2
+a54 2
+This specifies the name of the prune library, after
+duplicates and matches have been removed.  If this file is not specified then
+a56 2
+
+
+d58 1
+a58 1
+.LP
+d60 1
+a64 1
+.BR mg_make_fast_dict (1),
+d78 1
+a78 1
+.BR mgticstat (1)
+@

@@ -1,0 +1,360 @@
+head	1.5;
+access;
+symbols;
+locks
+	beebe:1.5; strict;
+comment	@# @;
+
+
+1.5
+date	94.05.16.07.09.54;	author beebe;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.05.16.05.26.46;	author beebe;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.15.22.20.53;	author beebe;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.13.01.23.29;	author beebe;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.13.01.21.06;	author beebe;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@.TH mgbuild 1 "15 May 1994"
+.SH NAME
+mgbuild \- build an mg system database
+.SH SYNOPSIS
+.B mgbuild
+[
+.B \-c
+]
+[
+.BI \-g " get"
+]
+[
+.BI \-s " source"
+]
+.I collection-name
+.SH DESCRIPTION
+.B mgbuild
+is a
+.B csh
+script that executes all the appropriate programs in the correct order
+to completely build an
+.BR mg (1)
+system database ready for queries to be made
+by
+.BR mgquery.
+This program makes use of the
+.BR mg_get (1)
+script to obtain the text of the collection.
+.SH OPTIONS
+Options can occur in any order, but the collection name must be last.
+.TP "\w'\fIcollection-name\fP'u+2n"
+.BI \-c
+This specifies whether the
+.I get
+program is \*(lqcomplex\*(rq.  If a
+.I get
+program is \*(lqcomplex\*(rq, then it requires initialisation and
+cleanup with the
+.B \-i
+and
+.B \-c
+options.
+.TP
+.BI \-g " get"
+This specifies the program to use for getting the source text for the
+build.  If no
+.B \-g
+option is given, the default program
+.BR mg_get (1)
+is used.
+.TP
+.BI \-s " source"
+The
+.B mgbuild
+program consists of two parts.  The first part initializes variables
+to default values.  The second part uses these variables to control
+how the
+.BR mg (1)
+database is built.  This option specifies a program to execute between
+the first and second parts.  The details of what the variables are, and
+how they may be changed, are in comments in the
+.B mgbuild
+program.
+.TP
+.I collection-name
+This is the collection name, as required by the
+.BR mg_get (1)
+program.  It serves both as a
+.I case
+statement selector, and as the name of a subdirectory that holds the
+indexing files.
+.SH ENVIRONMENT
+.TP "\w'\fBMGDATA\fP'u+2n"
+.SB MGDATA
+If this environment variable exists, then its value is used as the
+default directory where the
+.BR mg (1)
+collection files are.  If this variable does not exist, then the
+directory \*(lq\fB.\fP\*(rq is used by default.  The command line
+option
+.BI \-d " directory"
+overrides the directory in
+.BR MGDATA .
+.SH FILES
+.TP 20
+.B *.invf
+Inverted file.
+.TP
+.B *.invf.chunk
+Inverted file chunk descriptor file.  When the inverted file is
+created, it is written in chunks that use no more than a set amount of
+memory.  This file describes those chunks.
+.TP
+.B *.invf.chunk.trans
+Word-occurrence-order to lexical-order translation file.  The
+.B *.invf.chunk
+file is written in word-occurrence order but is required by
+.B \-N2
+to be in lexical order.
+.TP
+.B *.invf.dict
+Compressed stemmed dictionary.
+.TP
+.B *.invf.dict.blocked
+The `on-disk' stemmed dictionary.
+.TP
+.B *.invf.dict.hash
+Data for an order-preserving perfect hash function.
+.TP
+.B *.invf.idx
+The index into the inverted file.
+.TP
+.B *.weight
+The exact weights file.
+.TP
+.B *.text
+Compressed documents.
+.TP
+.B *.text.stats
+Text statistics.
+.TP
+.B *.text.dict
+Compressed compression dictionary.
+.TP
+.B *.text.idx
+Index into the compressed documents.
+.TP
+.B *.text.idx.wgt
+Interleaved index into the compressed documents and document weights.
+.TP
+.B *.weight.approx
+Approximate document weights.
+.SH "SEE ALSO"
+.na
+.BR mg (1),
+.BR mg_compression_dict (1),
+.BR mg_fast_comp_dict (1),
+.BR mg_get (1),
+.BR mg_invf_dict (1),
+.BR mg_invf_dump (1),
+.BR mg_invf_rebuild (1),
+.BR mg_passes (1),
+.BR mg_perf_hash_build (1),
+.BR mg_text_estimate (1),
+.BR mg_weights_build (1),
+.BR mgbilevel (1),
+.BR mgdictlist (1),
+.BR mgfelics (1),
+.BR mgquery (1),
+.BR mgstat (1),
+.BR mgtic (1),
+.BR mgticbuild (1),
+.BR mgticdump (1),
+.BR mgticprune (1),
+.BR mgticstat (1).
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d6 9
+a14 5
+.RB [ \-c ]
+.RB [ \-g
+.IR get ]
+.RB [ \-s
+.IR source ]
+a30 1
+.PP
+d134 1
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d65 1
+a65 1
+program.  It serves both as a 
+@
+
+
+1.2
+log
+@Correct spelling errors.
+@
+text
+@d1 1
+a1 1
+.TH mgbuild 1 "7 February 1994"
+d3 1
+a3 1
+mgbuild \- build a mg system database
+a4 1
+
+a11 2
+
+
+a12 1
+.LP
+d14 1
+a14 1
+is a 
+d16 9
+a24 5
+script that executes all the appropriate programs in the correct order to completely build a MG system database ready for queries to be made by 
+.BR mgquery. 
+This program makes use of the 
+.B mg_get 
+script written by Tim Bell and Bruce McKenzie to obtain the text of the collection.
+a25 1
+.LP
+d27 2
+a28 2
+.RS
+.TP
+d32 1
+a32 1
+program is \*(lqcomplex\*(rq. If a
+d34 4
+a37 3
+program is \*(lqcomplex\*(rq then it requires initialisation and cleanup with the 
+.B \-i 
+and 
+d39 1
+a39 1
+options. 
+d42 2
+a43 1
+This specifies the program to use for getting the source text for the build. If no 
+d45 2
+a46 2
+option is given the default program 
+.I mg_get
+d50 1
+a50 1
+The 
+d52 7
+a58 1
+program is basically in two parts. The first part set up a whole lot variables to default values. The second part uses these variables to control how the mg database is built. This option specifies a program to \*(lqsource\*(rq between the first and second parts. The details of what the variables are and how they may be changed are in comments in the 
+d60 1
+a60 1
+program. 
+d63 6
+a68 3
+This is the collection name as required by the 
+.B get
+program.
+d70 1
+a70 1
+.TP
+d72 9
+a80 3
+If this environment variable exists then its value is used as the default 
+directory where the mg collection files are to be written. If this variable
+does not exist then the directory \*(lq\fB.\fP\*(rq is used by default. 
+a81 1
+.PD 0
+d84 1
+a84 1
+Inverted file
+d87 3
+a89 1
+Inverted file chunk descriptor file. When the inverted file is created it is created in chunks that use no more that a set amount of memory. This file describes those chunks.
+d92 1
+a92 1
+Word occurrence order to lexical order translation file. The
+d94 1
+a94 1
+file is written in word occurrence order but is required by 
+d102 1
+a102 1
+The \*(lq\fBon disk\fP\*(rq stemmed dictionary.
+d105 1
+a105 1
+Data for a order preserving perfect hash function.
+d117 1
+a117 1
+text statistics.
+d131 1
+a131 1
+.LP
+d133 1
+a137 1
+.BR mg_make_fast_dict (1),
+d151 1
+a151 1
+.BR mgticstat (1)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d51 1
+a51 1
+program is basically in two parts. The first part set up a whole lot variables to default values. The second part uses these variables to control how the mg database is built. This option specifies a program to \*(lqsource\*(rq between the first and second parts. The detatils of what the variables are and how they may be changed are in comments in the 
+d72 1
+a72 1
+Inverted file chunck descriptor file. When the inverted file is created it is created in chunks that use no more that a set amount of memory. This file describes those chunks.
+d75 1
+a75 1
+Word occurance order to lexical order translation file. The
+d77 1
+a77 1
+file is written in word occurance order but is required by 
+d103 1
+a103 1
+Complessed compression dictionary.
+@

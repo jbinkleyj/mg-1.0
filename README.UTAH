@@ -1,0 +1,106 @@
+%% /usr/local/src/mg/README.UTAH, Thu May 19 16:55:43 1994
+%% Edit by Nelson H. F. Beebe <beebe@plot79.math.utah.edu>
+
+       Distribution notes for the mg full-text retrieval system
+
+			  Nelson H. F. Beebe
+		   Center for Scientific Computing
+		      Department of Mathematics
+			  University of Utah
+		       Salt Lake City, UT 84112
+				 USA
+		Email: beebe@math.utah.edu (Internet)
+			    [19-May-1994]
+
+This distribution of the mg full-text retrieval software is intended
+only for users at the University of Utah, and only for a limited
+period until the improvements communicated back to the original
+authors have been incorporated into their master distribution.
+
+The book reference is:
+
+@String{pub-VNR         = "Van Nostrand Reinhold"}
+@String{pub-VNR:adr     = "New York, NY, USA"}
+
+@Book{Witten:MG94,
+  author =       "Ian H. Witten and Alistair Moffat and Timothy C.
+                 Bell",
+  title =        "Managing Gigabytes: Compressing and Indexing Documents
+                 and Images",
+  publisher =    pub-VNR,
+  year =         "1994",
+  ISBN =         "0-442-01863-0",
+  LCCN =         "TA1637 .W58 1994",
+  address =      pub-VNR:adr,
+  pages =        "xiv + 429",
+  price =        "US\$54.95",
+  acknowledgement = ack-nhfb,
+  note =         "The software for full-text indexing described in this
+                  book, and errata for the book, are available for
+                  anonymous ftp from \path=munnari.oz.au= in the
+                  directory \path=/pub/mg=.",
+  bibdate =      "Thu May 12 08:02:54 1994",
+}
+
+There are NO source code changes to this distribution, but there are
+very extensive revisions to the manual pages, and a small change to
+the top-level Makefile.  The man/man1/README file describes the
+changes to the man pages.
+
+All changes are under RCS control, so you can see exactly what has
+been changed by doing
+
+	rcsdiff -r1.1 filename
+
+In addition, there is a new top-level subdirectory named utah that
+contains a Makefile and a revised mg_get script with bibfiles and
+texfiles targets.  This will soon be extended to handle other types of
+files.  I intend to try to get this software to build on all major
+vendor UNIX platforms (DEC (ULTRIX 4.x + OSF/1 1.x and 2.x), IBM (AIX
+3.2.x), HP (HP-UX 9.x), SGI (IRIX 4.x and 5.x), and Sun (SunOS 4.x and
+Solaris 2.x).  It already installs without problems on Sun and MIPS
+systems, and HP support is partially there.  If you do achieve a port
+to another architecture, please send any changes back to me so I can
+coordinate them with the developers in Australia.  I'm in regular
+e-mail contact with them.
+
+There is no install target in the Makefiles yet: after a successful
+build, just do something like this:
+
+	strip bin/*
+	cp bin/* /usr/local/bin
+	cp man/man1/*.1 /usr/local/man/man1
+
+To use xmg, the X Window System interface to mg, you need to install
+tcl; I have not yet done so.
+
+To make use of the utah directory, after installing mg on your system,
+just copy the two files there (Makefile and mg_get) into a new empty
+directory named $HOME/mgdata, cd there, and type "make".  I find it
+useful to have this automated by creating a cron entry something like
+this:
+
+00 04 * * *  rsh somehost.utah.edu 'cd $HOME/mgdata; (pwd ; date ; df . ; make ; date ) >>&make.log'
+
+This assumes that the login shell is csh or tcsh; otherwise, a cron
+entry like this will do:
+
+00 04 * * *  cd $HOME/mgdata; (pwd ; date ; df . ; make ; date ) >make.log 2>&1
+
+This runs mg every night at 4am; to run it hourly from 7am to 6pm,
+change the 04 to 07-18.
+
+The first time mg is run, it may take 10 to 15 minutes for several
+hundred files, or perhaps an hour for a few thousand files.
+Subsequent runs seem to be much faster; for one of our initial users
+with 1600 files, update runs take less than 2 minutes, so hourly
+updates are not a problem.  The major portion of the time is spent in
+scanning the file tree with find(1); in my own personal file tree
+(several hundred MB), the whole process takes 70 minutes.
+
+Please report any problems with this distribution back to me, rather
+than the original authors, so that we can channel communications
+through a single coordinating point, so as not to swamp the authors
+who have given us 35K lines of very useful new code, and who are very
+busy with the start of their Fall Semester (remember, Melbourne is
+upside-down from us).

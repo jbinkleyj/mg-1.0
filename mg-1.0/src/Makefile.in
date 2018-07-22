@@ -1,0 +1,74 @@
+###########################################################################
+#
+# Makefile.in -- Makefile for the general purpose library
+# Copyright (C) 1994  Neil Sharman
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#       @(#)Makefile.in	1.3 16 Mar 1994
+#
+###########################################################################
+
+
+LIBDIR = ../lib
+INCLUDEDIR = ../include
+
+CC = %%CC%%
+CFLAGS = %%CFLAGS%% -I$(INCLUDEDIR)
+DEPEND = %%DEPEND%%
+
+
+
+CFILES = PS_Tree.c PS_Tree_easy.c bitio_gen.c bitio_mem.c bitio_mems.c \
+	 bitio_random.c bitio_stdio.c filestats.c heap.c huffman.c \
+	 huffman_mem.c huffman_stdio.c memlib.c messages.c misc.c \
+	 perf_hash.c sptree.c stem.c timing.c
+
+OFILES = PS_Tree.o PS_Tree_easy.o bitio_gen.o bitio_mem.o bitio_mems.o \
+	 bitio_random.o bitio_stdio.o filestats.o heap.o huffman.o \
+	 huffman_mem.o huffman_stdio.o memlib.o messages.o misc.o \
+	 perf_hash.o sptree.o stem.o timing.o
+
+all : libextra.a
+
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+
+lint : 
+	lint $(CFLAGS) $(CFILES)
+
+
+libextra.a : $(OFILES)
+	ar rv libextra.a $(OFILES)
+	-ranlib libextra.a
+
+install : libextra.a
+	cp libextra.a $(LIBDIR)
+	-ranlib $(LIBDIR)/libextra.a
+
+clean :
+	-rm -f *.o *~ Makefile.bak core
+
+
+depend: $(CFILES)
+	mv Makefile Makefile.bak
+	sed '/^# DO NOT DELETE THIS LINE/,$$d' <Makefile.bak > Makefile
+	echo '# DO NOT DELETE THIS LINE -- make depend depends on it.' >> Makefile
+	echo >>Makefile
+	$(CC) -I$(EXTRA_INCLUDES) $(CFLAGS) $(DEPEND) $(CFILES) >> Makefile
+ 
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+

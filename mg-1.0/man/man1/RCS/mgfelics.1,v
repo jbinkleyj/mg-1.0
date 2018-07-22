@@ -1,0 +1,244 @@
+head	1.4;
+access;
+symbols;
+locks
+	beebe:1.4; strict;
+comment	@# @;
+
+
+1.4
+date	94.05.16.07.09.54;	author beebe;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.16.05.26.46;	author beebe;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.15.22.20.53;	author beebe;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.15.03.11.11;	author beebe;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@.TH mgfelics 1 "15 May 1994"
+.SH NAME
+mgfelics \- fast and efficient lossless image (de)compression
+.SH SYNOPSIS
+.B mgfelics
+.B \-e
+[
+.BI \-k " n"
+]
+.I infile
+[
+.I \>compressed-outfile
+]
+.br
+or
+.br
+.B mgfelics
+.B \-d
+.I compressed-infile
+[
+.I \>outfile
+]
+.SH DESCRIPTION
+.B mgfelics
+is a lossless compression process which can (de)compress portable
+bitmap files in
+.I pgm
+format.
+.B mgfelics
+writes to
+.IR stdout .
+.SH OPTIONS
+.TP "\w'\fB\-k\fP \fIn\fP'u+2n"
+.BI \-k " n"
+An integer parameter (< 32) which controls the compression speed and
+ratio.  The value of
+.I n
+is included in the output stream, and therefore is not needed in the
+decompression stage.  The default value of
+.I n
+is equal to the number of bits required to represent each grey level.
+.TP
+.B \-e
+Encodes the file
+.IR infile ,
+sending the output to
+.IR stdout .
+.TP
+.B \-d
+Decodes the file from
+.IR compressed-infile ,
+sending the output to
+.IR stdout .
+.SH NOTE
+.B mgfelics
+uses a combination of adjusted binary and Rice codes, the choice of
+which for any given pixel depends on the environment as determined by
+the intensity values of neighbouring pixels.  The result is a very
+fast and lossless algorithm for compressing grayscale images.  The
+optional parameter
+.BI \-k " n"
+corresponds to the maximum exponent of the same name in Rice encoding.
+Smaller values of
+.BI \-k " n"
+can result in significant improvement in compression times with a
+corresponding loss in compression ratio.  However the reduction in
+compression ratio with a small
+.BI \-k " n"
+parameter may be insignificant for many images.
+.SH REFERENCES
+Algorithm by Paul G. Howard and Jeffrey Scott Vitter
+of Brown University, RI, and Duke University, NC, respectively.
+.SH "SEE ALSO"
+.na
+.BR mg (1),
+.BR mg_compression_dict (1),
+.BR mg_fast_comp_dict (1),
+.BR mg_get (1),
+.BR mg_invf_dict (1),
+.BR mg_invf_dump (1),
+.BR mg_invf_rebuild (1),
+.BR mg_passes (1),
+.BR mg_perf_hash_build (1),
+.BR mg_text_estimate (1),
+.BR mg_weights_build (1),
+.BR mgbilevel (1),
+.BR mgbuild (1),
+.BR mgdictlist (1),
+.BR mgquery (1),
+.BR mgstat (1),
+.BR mgtic (1),
+.BR mgticbuild (1),
+.BR mgticdump (1),
+.BR mgticprune (1),
+.BR mgticstat (1).
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d7 3
+a9 2
+.RB [ \-k
+.IR n ]
+d11 3
+a13 1
+.RI [ \>compressed-outfile ]
+d20 3
+a22 1
+.RI [ \>outfile ]
+d74 1
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d31 1
+a31 1
+ratio.  The value of 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+.TH mgfelics 1 "28 February 1994"
+d10 2
+a11 2
+.RI [ \>compressed\-outfile ]
+
+d13 1
+a13 1
+
+d16 1
+a16 1
+.I compressed\-infile
+a18 1
+.LP
+d20 7
+a26 2
+is a lossless compression process which can de/compresses portable bitmap files (PGM).  mgfelics writes to stdout.
+
+d28 1
+a28 2
+.RS
+.TP
+d30 7
+a36 6
+An integer parameter < 32 which controls the
+compression speed and ratio.  The value of k
+is included in the output stream, and therefore is
+not needed in the decompression stage.  The default
+value of k is equal to the number of bits required to represent
+each grey level.
+d39 4
+a42 3
+Encodes the file 
+.IR infile
+sending the output to stdout.
+d46 3
+a48 3
+.IR compressed-infile
+sending the output to stdout.
+    	    	    
+d50 15
+a64 15
+.LP
+mgfelics uses a combination of adjusted binary and Rice codes,  
+the choice of which for any given pixel depends on the environment as  
+determined by the intensity values of neighbouring pixels. The  
+result is a very fast and lossless algorithm for compressing  
+grayscale images.
+
+The optional parameter, 
+.B k 
+corresponds to the maximum exponent of the same name
+in Rice encoding. Smaller values of k can result in significant improvement in
+compression times with a corresponding loss in compression ratio. However the
+reduction in compression ratio with a small k parameter may be insignificant
+for many images.
+
+a65 1
+.LP
+d67 1
+a67 1
+of Brown University, R.I., and Duke University, N.C. respectively.
+d69 1
+a69 1
+.LP
+d71 1
+a75 1
+.BR mg_make_fast_dict (1),
+d89 1
+a89 1
+.BR mgticstat (1)
+@

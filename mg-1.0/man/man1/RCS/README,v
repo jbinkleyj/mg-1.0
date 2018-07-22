@@ -1,0 +1,123 @@
+head	1.2;
+access;
+symbols;
+locks
+	beebe:1.2; strict;
+comment	@# @;
+
+
+1.2
+date	94.05.16.05.26.46;	author beebe;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.15.22.21.27;	author beebe;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@% Author:
+% 	Nelson H. F. Beebe
+% 	Center for Scientific Computing
+% 	Department of Mathematics
+% 	University of Utah
+% 	Salt Lake City, UT 84112
+% 	USA
+% 	Email: beebe@@math.utah.edu (Internet)
+
+This file records changes to the mg man pages.
+
+(0) Write new mg.1 file to give a brief overview of mg, with samples
+of how to use it.  Otherwise, users are likely to be completely
+overwhelmed by the number of programs (about 20) which might need to
+be used, when in reality, only 2 or 3 are likely to be run by end
+users.
+
+(1) The mg_make_fast_dict.1 file has been renamed mg_fast_comp_dict.1,
+and all mg_make_fast_dict strings changed to mg_fast_comp_dict in all
+man pages.
+
+(2) A large number of errors of spelling, typography, spacing, fonts,
+grammar, omitted words, slang, punctuation, missing man page
+cross-references, and man-page style have been corrected.
+
+(3) Of those programs that support a -h option to give a short help
+message, roughly half write it to stderr, and half to stdout.  All
+references to "on the screen" in -h descriptions have been changed to
+indicate either stderr or stdout.  However, this is definitely a
+consistency problem that should be fixed at source level.  I believe
+that all of these programs should write such messages to stderr.
+
+(4) Recommendation: mqguery (and others) should be revised to permit
+values like 4K and 2M to be given in place of awkward numbers like
+4096 and 2097152.
+
+(5) Code in mgstat is not checking for a zero divisor:
+
+% ls
+bibfiles.invf               bibfiles.text.idx.wgt
+bibfiles.invf.dict.blocked  bibfiles.trace
+bibfiles.text               bibfiles.weight.approx
+bibfiles.text.dict.fast
+
+% mgstat bibfiles
+Unable to open "./bibfiles.text.dict"
+Unable to open "./bibfiles.invf.dict"
+
+The collection is in "."
+
+                Files required by mgquery
+bibfiles.text                      :   903.14 Kb       Inf%
+bibfiles.invf                      :   405.40 Kb       Inf%
+bibfiles.text.idx.wgt              :   115.95 Kb       Inf%
+bibfiles.weight.approx             :    10.89 Kb       Inf%
+bibfiles.invf.dict.blocked         :   560.83 Kb       Inf%
+bibfiles.text.dict.fast            :   246.36 Kb       Inf%
+SUB TOTAL                          :  2242.57 Kb       Inf%
+
+                Files NOT required by mgquery
+SUB TOTAL                          :     0.00 Kb       NaN%
+
+TOTAL                              :  2242.57 Kb       Inf%
+
+Notice the Infinities and NaNs in the last column!
+
+(6) Although I have not done so, I think that the SEE ALSO sections in
+all but mg.1 should reference ONLY the programs that are mentioned in
+that particular man page file, with mg.1 preserving a reference to all
+of them.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d39 1
+a39 1
+% ls 
+d48 1
+a48 1
+ 
+d50 1
+a50 1
+ 
+d59 1
+a59 1
+ 
+d62 1
+a62 1
+ 
+d66 5
+@

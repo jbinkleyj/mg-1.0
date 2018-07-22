@@ -1,0 +1,164 @@
+%
+% For the moment, this is just the LaTeX source for the file
+% MG.Book.Errata.ps.  If you cannot access the .ps file for some reason
+% you will need to interpolate from this file by mentally stripping
+% out the formatting commands. If you cannot do that, send a fax number
+% or mail address to Alistair Moffat (contact information is in the file
+% README) and a hard copy will be forwarded to you.
+%
+% Alistair Moffat, 25 March, 1994.
+%
+%
+\documentstyle[11pt,a4]{article}
+\newcommand{\shouldbe}{\mbox{$\rightarrow$}}
+
+\begin{document}
+
+\begin{center}
+\large\bf
+			Managing Gigabytes:\\
+        Compressing and Indexing Documents and Images\\[2ex]
+
+               I.H.\ Witten, A.\ Moffat, T.C.\ Bell\\[2ex]
+
+               Van Nostrand Reinhold, New York, 1994\\
+                       ISBN 0-442-01863-0\\[4ex]
+
+		      Errata as at \today\\[4ex]
+			  % 25 March 1994
+\end{center}
+
+
+\subsection*{Front Matter}
+
+
+\subsection*{Chapter One}
+
+
+\subsection*{Chapter Two}
+\begin{description}
+	\item{page 25, para 2, line 5:}
+	``is is'' {\shouldbe} ``it is''
+
+	\item{page 34, Table 2.2:}
+	The two 18 bit codes are what {\tt mg} actually produces, 
+	but strictly speaking they should be 17 bits long, since
+	100, 101, 102 etc all appear exactly once in the text.
+	{\tt Mg} extends two codes to reserve one codeword for
+	other purposes, but this is not explained at all, and
+	the example should have been hand edited to avoid confusion.
+	If anything, the example is
+	a little bit too realistic in the context of Chapter Two.
+
+	\item{page 68, Table 2.6:}
+	``Mbyte/sec'' {\shouldbe} ``Mbyte/min'' 
+	twice in the body of the table, and
+	in the caption ``Mbyte/second'' {\shouldbe} ``Mbyte/minute''
+\end{description}
+
+
+\subsection*{Chapter Three}
+\begin{description}
+	\item{page 108, Figure 3.8:}
+	The stemmer that was used for this example is
+	proprietary, and so cannot be distributed with {\tt mg}.
+	Hence, if you try this experiment using the distributed {\tt
+	mg} software (which contains a much simpler stemmer) you are
+	likely to get different stemmed forms.
+\end{description}
+
+
+\subsection*{Chapter Four}
+
+
+\subsection*{Chapter Five}
+\begin{description}
+	\item{pages 189--195:}
+	We have improved the algorithm described
+	in this subsection, and the description here, while correct, is
+	no longer up to date. Contact Alistair Moffat for more details 
+	if you are interested.
+
+
+	\item{page 195, para 1:}
+	``$400 \times 50 \mbox{~Kbytes} = 1 \mbox{~Mbyte}$'' {\shouldbe}
+	``$400 \times 50 \mbox{~Kbyte} = 10 \mbox{~Mbytes}$''
+
+	\item{page 201, formula 2, line 2:}
+	``$10f$" {\shouldbe} ``$10ft_r$'' 
+
+	\item{page 204, Table 5.5:}
+	On the line ``Sort-based, multi-way, in-place'',
+	``141'' {\shouldbe} ``150''
+\end{description}
+
+
+\subsection*{Chapter Six}
+
+
+\subsection*{Chapter Seven}
+
+
+\subsection*{Chapter Eight}
+
+
+\subsection*{Chapter Nine}
+
+
+\subsection*{Chapter Ten}
+
+
+\subsection*{Appendix}
+\begin{description}
+
+	\item{page 391, last line:}
+	{\tt Mg} is also available as a {\tt gzip} archive.
+	In this case, copy the file {\tt mg.tar.gz} and use the command
+	\begin{verbatim}
+		    gunzip < mg.tar.gz | tar xf -
+	\end{verbatim}
+
+	\item{pages 393--398:}
+	Since completing the book we have developed an X-windows
+	interface.
+	This is not described at all in the appendix.
+	To try this interface, execute {\tt xmg} and then click on
+	the help button. Queries are typed in the top text-box,
+	and executed when enter is typed. Inspect documents by
+	clicking on their first line.
+
+	There is a manual page for {\tt xmg} (as there is for all of
+	the {\tt mg} commands), type {\tt man xmg}
+	as a Unix shell command.
+
+	\item{page 394, Figure A.1:}
+	The output format of {\tt mgstat} has changed since this figure was
+	prepared.
+	Also, note that the different stemmer included with {\tt mg} will
+	give rise to different statistics for the {\tt alice} collection.
+	You are unlikely to be able to reproduce the numbers in Figure
+	A.1(a).
+
+	\item{page 406, Table A.4, line 1:}
+	A further {\tt .set mode} option has been added:
+	\begin{verbatim}
+		    .set heads_length 20
+		    .set mode heads
+	\end{verbatim}
+	displays just the first 20 characters of each answer to
+	subsequent queries, with whitespace characters compacted.
+	To select and examine one returned document in full, use the
+	document number (33, say) from the desired line and return to
+	{\tt text} mode and change to {\tt docnums} as the query mode:
+	\begin{verbatim}
+		    .set query docnums
+		    .set mode text
+		    33
+	\end{verbatim}
+	This mode is used to good effect in {\tt xmg}.
+
+\end{description}
+
+\subsection*{Bibliography}
+\subsection*{Index}
+\end{document}

@@ -1,0 +1,48 @@
+                     BUILDING AND INSTALLATION OF MG
+                     ===============================
+ 
+This file explains how to build the mg system.
+ 
+(1) Type one of the following
+        make solaris    # for solaris 2.X
+        make sunos      # for SunOS 4.1.X
+        make mips
+        make hp         # for HP-PA machines !!!! Not working yet
+ 
+(2) Included with mg is an X11 interface to mgquery called xmg. 
+    Xmg is a ``wish'' script which uses the Tcl/Tk packages available
+    by anonymous ftp from allspice.berkeley.edu [128.32.150.27].
+ 
+(3) You will need to set the environment variable MGDATA which 
+    indicates where the mg data files will be created. You will also
+    need to create the directory you specify.
+ 
+    e.g.
+        setenv MGDATA ~/mgdata
+	mkdir ~/mgdata
+ 
+(4) You may also need to set the environment variable MGSAMPLE which 
+    is used by mg_get and indicates where the sample data included 
+    with this package is located.
+    If this is not specified it defaults to ``./SampleData''
+ 
+(5) Another environment variable that you may wish to set is
+    MGIMAGEVIEWER, this variable sets the image viewer to be used
+    to display images. The image viewer must take the image from stdin.
+    If this is not specified it defaults to ``xv -''.
+ 
+(6) To save typing, it is probably sensible to create a symlink from mg
+    to the directory mg-1.0.
+ 
+(7) Include mg-1.0/man (or mg/man) in your MANPATH environment variable.
+ 
+(8) Include mg-1.0/bin (or mg/bin) in you path.
+ 
+(9) After ``make''ing the package you can delete everything in 
+    mg-1.0/mg, mg-1.0/src, mg-1.0/lib  and mg-1.0/include as desired,
+    as they are not required for mg to run. If you don't want to use
+    the sample data then everything in mg-1.0/SampleData can also be
+    deleted.
+
+
+

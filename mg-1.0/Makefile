@@ -1,0 +1,135 @@
+# Make file for  full text retrevial system
+#
+
+VERSION=1.0
+TEMP1=/tmp/mg.files
+TEMP2=/tmp/mg.tar.files
+
+
+all : mg/Makefile src/Makefile 
+	@-mkdir bin 1>/dev/null 2>&1 
+	@-mkdir lib 1>/dev/null 2>&1 
+	-(cd src; make install)
+	-(cd mg; make)
+
+
+depend :
+	-(cd src; make depend)
+	-(cd mg; make depend)
+
+
+clean :
+	-(cd src; make clean)
+	-(cd mg; make clean)
+	-rm src/Makefile
+	-rm mg/Makefile
+	-rm lib/libextra.a src/libextra.a
+
+mg/Makefile src/Makefile : 
+	@echo ''
+	@echo 'The mg system must be configured first'
+	@echo 'Type one of the following :'
+	@echo '   make solaris    # for solaris 2.X'
+	@echo '   make sunos      # for SunOS 4.1.X'
+	@echo '   make mips'
+	@echo '   make hp         # for HP-PA machines'
+	@echo ''
+	@exit 1
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+solaris : solaris.mg  solaris.src all
+
+solaris.mg :
+	@sed -e 's#%%CC%%#cc#g' \
+	    -e 's#%%CFLAGS%%#-g -xO2 -xcg92 -v #g' \
+	    -e 's#%%LIBS%%#-lgen#g' \
+	    -e 's#%%DEPEND%%#-xM#g' \
+	    -e 's#%%RM%%#/bin/rm -f#g' \
+	    -e 's#%%VERSION%%#$(VERSION)#g' \
+	    < mg/Makefile.in >mg/Makefile
+
+solaris.src :
+	@sed -e 's#%%CC%%#cc#g' \
+	    -e 's#%%CFLAGS%%#-O -v -g #g' \
+	    -e 's#%%DEPEND%%#-xM#g' \
+	    < src/Makefile.in >src/Makefile
+		
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+sunos : sunos.mg  sunos.src all
+
+sunos.mg :
+	@sed -e 's#%%CC%%#gcc#g' \
+	    -e 's#%%CFLAGS%%#-D__STDC__=0 -O -g -Wall #g' \
+	    -e 's#%%LIBS%%##g' \
+	    -e 's#%%DEPEND%%#-MM#g' \
+	    -e 's#%%RM%%#/bin/rm -f#g' \
+	    -e 's#%%VERSION%%#$(VERSION)#g' \
+	    < mg/Makefile.in >mg/Makefile
+
+sunos.src :
+	@sed -e 's#%%CC%%#gcc#g' \
+	    -e 's#%%CFLAGS%%#-D__STDC__=0 -O -g -Wall #g' \
+	    -e 's#%%DEPEND%%#-MM#g' \
+	    < src/Makefile.in >src/Makefile
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+mips : mips.mg mips.src all
+
+mips.mg :
+	@sed -e 's#%%CC%%#cc#g' \
+	    -e 's#%%CFLAGS%%#-woff 100 -O -g #g' \
+	    -e 's#%%LIBS%%#-lPW#g' \
+	    -e 's#%%DEPEND%%#-M -I/usr/include#g' \
+	    -e 's#%%RM%%#/bin/rm -f#g' \
+	    -e 's#%%VERSION%%#$(VERSION)#g' \
+	    < mg/Makefile.in >mg/Makefile
+
+mips.src :
+	@sed -e 's#%%CC%%#cc#g' \
+	    -e 's#%%CFLAGS%%#-woff 100 -O -g #g' \
+	    -e 's#%%DEPEND%%#-M -I/usr/include#g' \
+	    < src/Makefile.in >src/Makefile
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+hp : hp.mg hp.src all
+
+hp.mg :
+	@sed -e 's#%%CC%%#c89#g' \
+	    -e 's#%%CFLAGS%%#-D__STDC__=0 -O -D_HPUX_SOURCE#g' \
+	    -e 's#%%LIBS%%##g' \
+	    -e 's#%%DEPEND%%#-M#g' \
+	    -e 's#%%RM%%#/bin/rm -f#g' \
+	    -e 's#%%VERSION%%#$(VERSION)#g' \
+	    < mg/Makefile.in >mg/Makefile
+
+hp.src :
+	@sed -e 's#%%CC%%#c89#g' \
+	    -e 's#%%CFLAGS%%#-O -D_HPUX_SOURCE#g' \
+	    -e 's#%%DEPEND%%#-M#g' \
+	    < src/Makefile.in >src/Makefile
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+package : mg/query.bool.c
+	sed -e 's#%%VERSION%%#$(VERSION)#g' < INSTALL.src > INSTALL
+	ls include/*.h src/Makefile.in src/*.c man/man1/*.1 >$(TEMP1)
+	find SampleData -type f -print >>$(TEMP1)
+	ls Makefile README COPYING INSTALL >>$(TEMP1)
+	ls mg/SCCS | nawk '/^s\./{printf("mg/%s\n",substr($$0,3));}' >>$(TEMP1)
+	ls mg/query.bool.c >>$(TEMP1)
+	nawk '{printf("mg-$(VERSION)/%s\n", $$0);}' <$(TEMP1) >$(TEMP2)
+	rm $(TEMP1)
+	-rm mg-$(VERSION)
+	ln -s . mg-$(VERSION)
+	tar -chf - -I $(TEMP2) | gzip >mg-$(VERSION).tar.gz
+	tar -chf - -I $(TEMP2) | compress >mg-$(VERSION).tar.Z
+	rm mg-$(VERSION)
+	rm  $(TEMP2)
+
+
+mg/query.bool.c : mg/query.bool.y
+	(cd mg; make -f Makefile.in query.bool.c)

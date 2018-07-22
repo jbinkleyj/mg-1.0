@@ -1,0 +1,265 @@
+###########################################################################
+#
+# Makefile.in -- Makefile for the MG system
+# Copyright (C) 1994  Neil Sharman
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#       @(#)Makefile.in	1.10 22 Mar 1994
+#
+###########################################################################
+
+
+CC = %%CC%%
+CFLAGS = %%CFLAGS%% -L../lib -I../include
+LIBS = -lextra -lm %%LIBS%%
+DEPEND = %%DEPEND%%
+RM = %%RM%%
+VERSION = %%VERSION%%
+
+
+
+
+
+#############################################################################
+#
+# Uncomment (and possibly edit) the following lines if you wish
+# to use the GNU readline library for the input in mgquery
+# 
+#READLINE = -DGNU_READLINE -I/opt/gnu/include/readline -L/opt/gnu/lib
+#READLINE_LIBS = -lreadline -ltermcap
+#
+#
+#############################################################################
+
+#############################################################################
+#
+# When working with the trec collection this should be uncommented.
+#
+# TREC_MODE = -DTREC_MODE
+#
+#
+#############################################################################
+
+
+
+BINARIES      =	../bin/mgquery ../bin/mg_weights_build \
+		../bin/mgstat ../bin/mg_invf_dump ../bin/mg_invf_dict \
+		../bin/mg_invf_rebuild ../bin/mgdictlist \
+		../bin/mg_passes ../bin/mg_perf_hash_build \
+		../bin/mg_compression_dict ../bin/mg_text_estimate \
+		../bin/mg_fast_comp_dict ../bin/mgfelics ../bin/mgbilevel \
+		../bin/mgtic ../bin/mgticbuild ../bin/mgticprune \
+		../bin/mgticstat ../bin/mgticdump
+
+SCRIPTS       =	../bin/mgbuild ../bin/mg_get ../bin/xmg
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+CFILES        = commands.c comp_dict.c environment.c extractor.c \
+                felics.c invf.pass1.c invf.pass2.c invf_get.c ivf.pass1.c \
+                ivf.pass2.c lists.c locallib.c lstevent.c marklist.c \
+                match.c mg.special.c mg_compression_dict.c mg_errors.c \
+                mg_files.c mg_fast_comp_dict.c mg_invf_dict.c mg_invf_dump.c \
+		mg_invf_rebuild.c mg_passes.c mg_perf_hash_build.c \
+                mg_text_estimate.c mg_weights_build.c mgbilevel.c \
+                mgdictlist.c mgfelics.c mgquery.c mgstat.c mgtic.c \
+                mgticbuild.c mgticdump.c \
+                mgticprune.c mgticstat.c pbmtools.c \
+                ppm.c query.docnums.c query.ranked.c read_line.c \
+                sortmarks.c stemmer.c stem_search.c text.pass1.c \
+                text.pass2.c text_get.c utils.c weights.c 
+ 
+HFILES        = arithcode.h backend.h basictypes.h bilevel.h build.h \
+                codeoffsets.h codesyms.h commands.h comp_dict.h ctm.h \
+                environment.h error.h extractor.h globals.h hash.h invf.h \
+                invf_get.h lists.h locallib.h marklist.h match.h mg.h \
+                mg_errors.h mg_files.h model.h pbmtools.h read_line.h \
+                sortmarks.h stemmer.h stem_search.h text.h text_get.h \
+                utils.h weights.h words.h 
+
+SHFILES       =	mgbuild.sh mg_get.sh xmg.sh
+
+MISC          = Makefile help.mg.src README.MG query.bool.y
+
+
+ALLFILES      =	$(CFILES) $(HFILES) $(SHFILES) $(MISC)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+.c.o:
+	$(CC) $(CFLAGS) $(TREC_MODE) $(CPPFLAGS) $(READLINE) -c $<
+
+
+all:	$(BINARIES) $(SCRIPTS)
+
+mgquery.o : mgquery.c
+	$(CC) $(CFLAGS) $(TREC_MODE) -DVERSION=\"$(VERSION)\" $(CPPFLAGS) $(READLINE) -c mgquery.c
+	
+query.bool.c : query.bool.y
+	bison -o query.bool.c query.bool.y
+
+help.mg.h : help.mg.src
+	sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g' help.mg.src | nawk '/^#/ { next; };{ if (x == 0) printf("static char *help_str[] = {\n\"%s\\n\"", $$0); else printf(",\n\"%s\\n\"", $$0); x = 1; }; END { printf("};\n"); }' - >help.mg.h
+
+warranty.h : warranty.src
+	sed  -e 's/\\/\\\\/g' -e 's/\"/\\\"/g' warranty.src | nawk '/^#/ { next; };{ if (x == 0) printf("static char *warranty_str[] = {\n\"%s\\n\"", $$0); else printf(",\n\"%s\\n\"", $$0); x = 1; }; END { printf("};\n"); }' - >warranty.h
+
+conditions.h : conditions.src
+	sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g' conditions.src | nawk '/^#/ { next; };{ if (x == 0) printf("static char *cond_str[] = {\n\"%s\\n\"", $$0); else printf(",\n\"%s\\n\"", $$0); x = 1; }; END { printf("};\n"); }' - >conditions.h
+
+../bin/query.bool : query.bool.c
+	$(CC) $(CFLAGS) -DSTANDALONE=1 -o ../bin/query.bool \
+		query.bool.c $(LIBS)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+../bin/mgquery:	mgquery.o locallib.o lists.o \
+		query.ranked.o query.bool.o query.docnums.o stem_search.o \
+		environment.o commands.o weights.o text_get.o stemmer.o \
+		read_line.o mg_errors.o backend.o invf_get.o 
+	$(CC) $(CFLAGS) $(READLINE) -o ../bin/mgquery mgquery.o \
+		locallib.o lists.o query.ranked.o query.bool.o \
+		query.docnums.o stem_search.o environment.o commands.o \
+		weights.o text_get.o read_line.o mg_errors.o stemmer.o\
+		backend.o invf_get.o $(READLINE_LIBS) $(LIBS)
+
+commands.o : help.mg.h warranty.h conditions.h
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+../bin/mg_passes:	mg_passes.o text.pass1.o comp_dict.o stemmer.o \
+		text.pass2.o invf.pass1.o invf.pass2.o locallib.o \
+		ivf.pass1.o ivf.pass2.o mg.special.o mg_files.o
+	$(CC) $(CFLAGS) -o ../bin/mg_passes mg_passes.o stemmer.o \
+		text.pass1.o text.pass2.o comp_dict.o \
+		invf.pass1.o invf.pass2.o ivf.pass1.o ivf.pass2.o \
+		locallib.o mg.special.o mg_files.o $(LIBS)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+../bin/mgfelics: felics.o mgfelics.o utils.o 
+	$(CC) $(CFLAGS) -o ../bin/mgfelics felics.o mgfelics.o utils.o $(LIBS)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+../bin/mgbilevel: arithcode.o bilevel.o extractor.o marklist.o mgbilevel.o \
+		pbmtools.o utils.o
+	$(CC) $(CFLAGS) -o ../bin/mgbilevel arithcode.o bilevel.o \
+		extractor.o marklist.o mgbilevel.o pbmtools.o utils.o $(LIBS)
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+../bin/mgtic: mgtic.o extractor.o marklist.o pbmtools.o utils.o match.o \
+		sortmarks.o codesyms.o ppm.o lstevent.o arithcode.o \
+		codeoffsets.o bilevel.o
+	$(CC) $(CFLAGS) -o ../bin/mgtic mgtic.o extractor.o marklist.o \
+		pbmtools.o utils.o match.o sortmarks.o codesyms.o \
+		ppm.o arithcode.o lstevent.o codeoffsets.o bilevel.o $(LIBS)
+
+../bin/mgticbuild:     mgticbuild.o extractor.o marklist.o pbmtools.o utils.o
+	$(CC) $(CFLAGS) -o ../bin/mgticbuild mgticbuild.o extractor.o \
+		marklist.o pbmtools.o utils.o $(LIBS)
+ 
+../bin/mgticprune:     mgticprune.o extractor.o marklist.o pbmtools.o \
+		utils.o match.o
+	$(CC) $(CFLAGS) -o ../bin/mgticprune mgticprune.o marklist.o \
+		pbmtools.o utils.o match.o $(LIBS)
+ 
+../bin/mgticstat:      mgticstat.o extractor.o marklist.o pbmtools.o utils.o
+	$(CC) $(CFLAGS) -o ../bin/mgticstat mgticstat.o extractor.o \
+		marklist.o pbmtools.o utils.o $(LIBS)
+ 
+../bin/mgticdump:      mgticdump.o extractor.o marklist.o pbmtools.o utils.o
+	$(CC) $(CFLAGS) -o ../bin/mgticdump mgticdump.o extractor.o \
+		marklist.o pbmtools.o utils.o $(LIBS)
+ 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+../bin/mgbuild : mgbuild.sh
+	$(RM) $@
+	cat mgbuild.sh >$@
+	chmod +x $@
+
+../bin/mg_get : mg_get.sh
+	$(RM) $@
+	cat mg_get.sh >$@
+	chmod +x $@
+
+../bin/xmg : xmg.sh
+	$(RM) $@
+	cat xmg.sh >$@
+	chmod +x $@
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+../bin/mg_weights_build:	mg_weights_build.o mg_files.o
+	$(CC) $(CFLAGS) -o ../bin/mg_weights_build mg_weights_build.o \
+		mg_files.o $(LIBS)
+
+../bin/mg_compression_dict:	mg_compression_dict.o mg_files.o locallib.o
+	$(CC) $(CFLAGS) -o ../bin/mg_compression_dict mg_compression_dict.o \
+		mg_files.o locallib.o $(LIBS)
+
+../bin/mg_fast_comp_dict:	mg_fast_comp_dict.o mg_files.o locallib.o
+	$(CC) $(CFLAGS) -o ../bin/mg_fast_comp_dict mg_fast_comp_dict.o \
+		mg_files.o locallib.o $(LIBS)
+
+../bin/mg_text_estimate:	mg_text_estimate.o locallib.o comp_dict.o \
+		mg_files.o
+	$(CC) $(CFLAGS) -o ../bin/mg_text_estimate mg_text_estimate.o \
+		locallib.o comp_dict.o mg_files.o $(LIBS)
+
+../bin/mgstat:	mgstat.o mg_files.o locallib.o
+	$(CC) $(CFLAGS) -o ../bin/mgstat mgstat.o mg_files.o locallib.o \
+		$(LIBS)
+
+../bin/mg_invf_dump:	mg_invf_dump.o locallib.o mg_files.o
+	$(CC) $(CFLAGS) -o ../bin/mg_invf_dump mg_invf_dump.o locallib.o \
+		mg_files.o $(LIBS)
+
+../bin/mg_invf_dict:	mg_invf_dict.o mg_files.o locallib.h
+	$(CC) $(CFLAGS) -o ../bin/mg_invf_dict mg_invf_dict.o mg_files.o \
+		$(LIBS)
+
+../bin/mg_invf_rebuild:	mg_invf_rebuild.o locallib.h
+	$(CC) $(CFLAGS) -o ../bin/mg_invf_rebuild mg_invf_rebuild.o $(LIBS)
+
+../bin/mgdictlist:	words.h mgdictlist.o locallib.o
+	$(CC) $(CFLAGS) -o ../bin/mgdictlist mgdictlist.o locallib.o $(LIBS)
+
+../bin/mg_perf_hash_build:	mg_perf_hash_build.o mg_files.o
+	$(CC) $(CFLAGS) -o ../bin/mg_perf_hash_build mg_perf_hash_build.o \
+		 mg_files.o $(LIBS)
+
+
+
+clean:
+	/bin/rm -f a.out core *.o *~ $(BINARIES) $(SCRIPTS) \
+		Makefile.bak query.bool.c help.mg.h
+
+depend: $(CFILES)
+	mv Makefile Makefile.bak
+	sed '/^# DO NOT DELETE THIS LINE/,$$d' <Makefile.bak > Makefile
+	echo '# DO NOT DELETE THIS LINE -- make depend depends on it.' >> Makefile
+	echo >>Makefile
+	$(CC) -I$(EXTRA_INCLUDES) $(CFLAGS) $(DEPEND) $(CFILES) >> Makefile
+
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+

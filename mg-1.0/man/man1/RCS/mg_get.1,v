@@ -1,0 +1,236 @@
+head	1.5;
+access;
+symbols;
+locks
+	beebe:1.5; strict;
+comment	@# @;
+
+
+1.5
+date	94.05.16.07.09.54;	author beebe;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	94.05.16.05.26.46;	author beebe;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	94.05.15.22.20.53;	author beebe;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	94.05.13.01.10.05;	author beebe;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	94.05.13.01.09.48;	author beebe;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@.TH mg_get 1 "15 May 1994"
+.SH NAME
+mg_get \- output source texts for processing
+.SH SYNOPSIS
+.B mg_get
+.I collection-name
+.if n .ti +9n
+[
+.BR \-init " |"
+.BR \-i " |"
+.BR \-text " |"
+.BR \-t " |"
+.BR \-cleanup " |"
+.B  \-c
+]
+.SH DESCRIPTION
+This program is the default one used by
+.BR mgbuild (1)
+to generate the source text for the
+.BR mg (1)
+system.  Any program may be used to generate the source
+text for
+.BR mgbuild (1),
+as long as it confirms to the interface specified
+here.
+.SH OPTIONS
+The
+.I collection-name
+must appear before any other option.  Only the first option has any
+significance.  If no option is specified,
+.B \-text
+is assumed.
+.TP "\w'\fB\-cleanup\fP and \fB\-c\fP'u+2n"
+.BR \-init " and " \-i
+The program is called once with this flag at the start of building a
+collection.
+.TP
+.BR \-text " and " \-t
+The program is called with this flag multiple times during the
+building of a collection.  The program outputs (on
+.IR stdout )
+the text of the collection.
+.I Documents
+within the collection are separated by ctrl-B's (ASCII code 2).
+.I Paragraphs
+within the collection are separated by ctrl-C's (ASCII code 3).  A
+collection need not contain paragraphs, unless a level-3 inverted file
+is being generated (see
+.BR mgbuild (1)
+and
+.BR mg_passes (1)).
+.TP
+.BR \-cleanup " and " \-c
+The program is called once with this flag at the completion of
+building a collection.
+.SH ENVIRONMENT
+.TP "\w'\fBMGDATA\fP'u+2n"
+.SB MGDATA
+If this environment variable exists, then its value is used as the
+default directory where the
+.BR mg (1)
+collection files are.  If this variable does not exist, then the
+directory \*(lq\fB.\fP\*(rq is used by default.  The command line
+option
+.BI \-d " directory"
+overrides the directory in
+.BR MGDATA .
+.SH "SEE ALSO"
+.na
+.BR mg (1),
+.BR mg_compression_dict (1),
+.BR mg_fast_comp_dict (1),
+.BR mg_invf_dict (1),
+.BR mg_invf_dump (1),
+.BR mg_invf_rebuild (1),
+.BR mg_passes (1),
+.BR mg_perf_hash_build (1),
+.BR mg_text_estimate (1),
+.BR mg_weights_build (1),
+.BR mgbilevel (1),
+.BR mgbuild (1),
+.BR mgdictlist (1),
+.BR mgfelics (1),
+.BR mgquery (1),
+.BR mgstat (1),
+.BR mgtic (1),
+.BR mgticbuild (1),
+.BR mgticdump (1),
+.BR mgticprune (1),
+.BR mgticstat (1).
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d7 9
+a15 3
+.RB [ \-init " | " \-i " | "
+.BR \-text " | " \-t " | "
+.BR \-cleanup " | " \-c ]
+a32 1
+.PP
+d69 1
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d7 2
+a8 2
+.RB [ \-init " | " \-i " | " 
+.BR \-text "| " \-t " | " 
+@
+
+
+1.2
+log
+@Correct typo.
+@
+text
+@d1 1
+a1 1
+.TH mg_get 1 "31 January 1994"
+a4 1
+ 
+d7 3
+a9 1
+.RB [ \-init | \-i | \-text\fP|\fB\-t\fP|\fB\-cleanup\fP|\fB\-c\fP]
+d11 9
+a19 2
+.LP
+This program is the default one used by mgbuild to generate the source text for the MG system. Any program may be used to generate the source text for mgbuild as long as it confirms to the interface specified here. 
+a20 1
+.LP
+d22 3
+a24 2
+.I collection\-name
+must appear before any other option. Only the first option has any significance. If no option is specified
+d27 2
+a28 2
+.RS
+.TP
+d30 2
+a31 1
+The program is called once with this flag at the start of building a collection.
+d34 13
+a46 4
+The program is called with this flag multiple times during the building of a collection. The program outputs (on stdout) the text of the collection. \*(lq\fBDocuments\fP\*(rq within the collection are separated with by ctrl-B's (ASCII code 2). \*(lq\fBParagraphs\fP\*(rq within the collection are separated with ctrl-C's (ASCII code 3). A collection need not contain paragraphs unless a level 3 inverted file is being generated (see 
+.B mgbuild 
+and 
+.BR mg_passes ). 
+d49 2
+a50 1
+The program is called once with this flag at the completion of building a collection.
+d52 1
+a52 1
+.TP
+d54 6
+a59 4
+If this environment variable exists then its value is used as the default 
+directory where the mg collection files are. If this variable does not exist
+then the directory \*(lq\fB.\fP\*(rq is used by default. The command line 
+option 
+d61 1
+a61 1
+overrides the directory in 
+d64 1
+a64 1
+.LP
+d66 1
+a69 1
+.BR mg_make_fast_dict (1),
+d84 1
+a84 1
+.BR mgticstat (1)
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d35 1
+a35 1
+If this environment variable exists then its value is used a the default 
+@

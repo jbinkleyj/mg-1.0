@@ -1,0 +1,86 @@
+
+	MG Information Retrieval System
+	===============================
+
+This system is described in the book ``Managing Gigabytes:
+Compressing and Indexing Documents and Images'', I.H. Witten,
+A. Moffat, and T.C. Bell; Van Nostrand Reinhold, New York,
+1994; ISBN 0-442-01863-0; US$54.95; call 1 (800) 544-0550 to
+order.  A tutorial guide to the MG system appears an an 
+appendix.
+
+
+The files in this directory are:
+
+mg.tar.Z
+	A tarred, compressed, collection of C and other source
+	files.  Use
+
+		uncompress < mg.tar.Z | tar xf -
+
+	to create a new directory ./mg-1.0 that contains the
+	distribution.  This directory contains its own README 
+	file, you should read it next.
+
+	The current version is mg-1.0, dated 25 March 1994.
+
+mg.tar.gz
+	The same, except gnuzip is used as the compression agent.
+	Use
+
+		gunzip < mg.tar.gz | tar xf -
+
+	to unpack it.
+
+MG.book.errata
+	A text file listing known errors in the book.
+	(Currently just the LaTeX source of the next file)
+
+MG.book.errata.ps
+	The same, but as a formatted postscript file. 
+
+README
+	This file.
+
+
+See the file ./mg-1.0/INSTALL (after unpacking the archive)
+for information about installation and system availability.
+
+
+There is one important feature of MG not described in the MG
+book.  Since completing the book we have developed an X
+interface.  A brief description appears in the ``Appendix''
+section of MG.book.errata. More detailed guidance can be
+obtained by unpacking and installing the distribution and then
+typing ``man xmg''.
+
+
+There is no warranty of any kind provided with this software.
+You use it at your own risk. Nor may you sell or otherwise use
+this software for commercial gain; see the conditions listed in
+the files ./mg-1.0/COPYING and ./mg-1.0/README after unpacking
+the tar archive.
+
+
+If you discover unreported errors in the book, or have other
+queries, please contact:
+
+	Alistair Moffat, 
+	Department of Computer Science, 
+	The University of Melbourne, 
+	Parkville, Victoria 3052,
+	Australia;
+	Fax +61 3 3481184; 
+	Phone +61 3 3449168; 
+	Internet alistair@cs.mu.oz.au.
+
+
+Many people have helped us develop this software, and a full
+list of contributors appears in the file ./mg-1.0/README. We
+hope you enjoy playing with this software, and find it useful.
+We have certainly had fun developing it!
+
+		Ian Witten
+		Alistair Moffat
+		Tim Bell,
+		March 25, 1994.
